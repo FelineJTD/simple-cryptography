@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Table with Invisible Borders</title>
+  <title>Encryption/Decryption App</title>
   <style>
     /* Style the table for visual clarity */
     table {
@@ -11,6 +11,7 @@
       border-collapse: collapse; /* Combine cell borders for a seamless look */
       border: none; /* Remove default table borders */
     }
+
     td {
       padding: 10px;
       border-bottom: 1px solid transparent; /* Maintain invisible rows */
@@ -18,49 +19,55 @@
   </style>
 </head>
 <body>
-  <table>
-    <tr>
-      <td>Input Type:</td>
-      <td>
-        <select id="input-type">
-          <option value="text" selected>Text</option>
-          <option value="file">File</option>
-        </select>
-      </td>
-    </tr>
-    <tr class="dynamic-row-text">
-      <td>Input Text:</td>
-      <td><input type="text" id="input-text"></td>
-    </tr>
-    <tr class="dynamic-row-file">
-      <td>Input File:</td>
-      <td><input type="file" id="input-file"></td>
-    </tr>
-    <tr>
-      <td>Cipher:</td>
-      <td>
-        <select id="input-type">
-          <option value="vigenere">Vigenere Cipher</option>
-          <option value="auto-key">Auto-Key Vigenere Cipher</option>
-          <option value="extended">Extended Vigenere Cipher</option>
-          <option value="playfair">Playfair Cipher</option>
-          <option value="affine">Affine Cipher</option>
-          <option value="hill">Hill Cipher</option>
-          <option value="super">Super Encryption</option>
-          <option value="enigma">Enigma Machine</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>Key:</td>
-      <td><input type="text" id="input-key"></td>
-    </tr>
-    <tr>
-      <td><button>Encrypt</button></td>
-      <td><button>Decrypt</button></td>
-    </tr>
-  </table>
+  <div id="container">
+    <h1>Encryption/Decryption App</h1>
+    <table>
+      <tr>
+        <td>Input Type:</td>
+        <td>
+          <select id="input-type">
+            <option value="text" selected>Text</option>
+            <option value="file">File</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="dynamic-row-text">
+        <td>Input Text:</td>
+        <td><textarea id="input-text"></textarea></td>
+      </tr>
+      <tr class="dynamic-row-file">
+        <td>Input File:</td>
+        <td><input type="file" id="input-file" accept=".txt"></td>
+      </tr>
+      <tr>
+        <td>Cipher:</td>
+        <td>
+          <select id="cipher">
+            <option value="vigenere">Vigenere Cipher</option>
+            <option value="auto-key">Auto-Key Vigenere Cipher</option>
+            <option value="extended">Extended Vigenere Cipher</option>
+            <option value="playfair">Playfair Cipher</option>
+            <option value="affine">Affine Cipher</option>
+            <option value="hill">Hill Cipher</option>
+            <option value="super">Super Encryption</option>
+            <option value="enigma">Enigma Machine</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Key:</td>
+        <td><input type="text" id="input-key"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button>Encrypt</button><button>Decrypt</button></td>
+      </tr>
+    </table>
+    <div id="result"></div>
+  </div>
+
   <script>
+    /* Existing JavaScript from your version for dynamic input handling */
     const inputTypeSelect = document.getElementById('input-type');
     const inputTextRow = document.querySelector('.dynamic-row-text');
     const inputFileRow = document.querySelector('.dynamic-row-file');
@@ -81,6 +88,26 @@
         inputText.disabled = true;
         inputFileRow.style.display = 'table-row';
       }
+    });
+
+    // Replace with AJAX-based form submission (adjust endpoint URL)
+    document.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission behavior
+
+      const formData = new FormData(event.target);
+      const url = '/encrypt'; // Adjust based on your Sinatra route
+
+      fetch(url, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        resultDiv.textContent = data.result;
+      })
+      .catch(error => {
+        resultDiv.textContent = 'An error occurred: ' + error;
+      });
     });
   </script>
 </body>

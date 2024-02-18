@@ -10,3 +10,5 @@ gem "rerun", "~> 0.14.0"
 
 gem "guard", "~> 2.18"
 gem "guard-livereload", "~> 2.5"
+
+gem 'base64' # for encoding and decoding
