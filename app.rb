@@ -72,11 +72,22 @@ post '/decrypt' do
 end
 
 get '/' do
+  @test = "Hello World"
   erb :index
+end
+
+get '/temp' do
+  erb :temp
 end
 
 get '/result' do
   erb :result
 end
 
+post '/call_ruby_function' do
+  # Call the specific Ruby function in the model
+  result = Task.hello_world # Replace with your actual function
 
+  # Return a response (could be JSON, text, etc.)
+  text result
+end
