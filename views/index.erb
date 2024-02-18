@@ -3,21 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file in the public directory -->
-  <title>Sinatra App</title>
+  <title>Dynamic Table with Invisible Borders</title>
+  <style>
+    /* Style the table for visual clarity */
+    table {
+      width: 400px;
+      border-collapse: collapse; /* Combine cell borders for a seamless look */
+      border: none; /* Remove default table borders */
+    }
+    td {
+      padding: 10px;
+      border-bottom: 1px solid transparent; /* Maintain invisible rows */
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Sinatra App!</h1>
-  </header>
+  <table>
+    <tr>
+      <td>Input Type:</td>
+      <td>
+        <select id="input-type">
+          <option value="text" selected>Text</option>
+          <option value="file">File</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="dynamic-row-text">
+      <td>Input Text:</td>
+      <td><input type="text" id="input-text"></td>
+    </tr>
+    <tr class="dynamic-row-file">
+      <td>Input File:</td>
+      <td><input type="file" id="input-file"></td>
+    </tr>
+    <tr>
+      <td>Cipher:</td>
+      <td>
+        <select id="input-type">
+          <option value="vigenere">Vigenere Cipher</option>
+          <option value="auto-key">Auto-Key Vigenere Cipher</option>
+          <option value="extended">Extended Vigenere Cipher</option>
+          <option value="playfair">Playfair Cipher</option>
+          <option value="affine">Affine Cipher</option>
+          <option value="hill">Hill Cipher</option>
+          <option value="super">Super Encryption</option>
+          <option value="enigma">Enigma Machine</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Key:</td>
+      <td><input type="text" id="input-key"></td>
+    </tr>
+    <tr>
+      <td><button>Encrypt</button></td>
+      <td><button>Decrypt</button></td>
+    </tr>
+  </table>
+  <script>
+    const inputTypeSelect = document.getElementById('input-type');
+    const inputTextRow = document.querySelector('.dynamic-row-text');
+    const inputFileRow = document.querySelector('.dynamic-row-file');
+    const inputText = document.getElementById('input-text');
 
-  <main>
-    <p>This is a simple Sinatra application.</p>
-    <p>Current time: <%= Time.now %></p> <!-- Embedding Ruby code to display the current time -->
-  </main>
+    // Set text input as visible and enabled initially
+    inputTextRow.style.display = 'table-row';
+    inputText.disabled = false;
+    inputFileRow.style.display = 'none';
 
-  <footer>
-    <p>&copy; 2024 Your Name</p>
-  </footer>
+    inputTypeSelect.addEventListener('change', (event) => {
+      if (event.target.value === 'text') {
+        inputTextRow.style.display = 'table-row';
+        inputText.disabled = false;
+        inputFileRow.style.display = 'none';
+      } else {
+        inputTextRow.style.display = 'none';
+        inputText.disabled = true;
+        inputFileRow.style.display = 'table-row';
+      }
+    });
+  </script>
 </body>
 </html>
