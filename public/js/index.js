@@ -23,8 +23,8 @@ function encrypt(plaintext, cipher) {
   console.log('Encrypting plaintext');
   $.ajax({
     url: '/encrypt',
-    method: 'GET',
-    // data: { plaintext: plaintext, cipher: cipher },
+    method: 'POST',
+    data: { plaintext: plaintext, cipher: cipher },
     success: function(response) {
       console.log("success");
       console.log(response);

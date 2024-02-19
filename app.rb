@@ -9,10 +9,10 @@ require_relative 'models/cipher'
 
 set :root, File.dirname(__FILE__)
 
-get '/encrypt' do
+post '/encrypt' do
   puts "helloooo???"
-  # plaintext = Cipher(params[:plaintext], params[:cipher], params[:key])
-  result = Cipher.encrypt
+  plaintext = Cipher.new(params[:plaintext], params[:cipher], params[:key])
+  result = plaintext.encrypt
   { result: result }.to_json
 end
 

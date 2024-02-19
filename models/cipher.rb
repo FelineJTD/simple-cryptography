@@ -17,7 +17,7 @@ class Cipher
     @key = key
   end
 
-  def self.encrypt
+  def encrypt
     puts "helloooo from encrypt???"
     # case @cipher
     # when 'vigenere'
