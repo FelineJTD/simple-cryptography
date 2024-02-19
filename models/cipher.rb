@@ -21,10 +21,15 @@ class Cipher
     puts "helloooo from encrypt???"
     case @cipher
     when 'vigenere'
-      puts @plaintext
-      puts @cipher
-      puts @key
-      @result = 'hello vigenere'
+      # Asumsi case sensitive (A berarti shift 1, a berarti shift 33)
+      @result = ''
+      for i in 0..@plaintext.length-1
+        if @plaintext[i] != ' '
+          @result += ((@plaintext[i].ord - 64 + @key[i % @key.length].ord - 64) % 26 + 64).chr
+        else
+          @result += ' '
+        end
+      end
     when 'auto-key'
       @result = auto_key_encrypt
     when 'extended'
