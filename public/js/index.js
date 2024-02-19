@@ -19,8 +19,10 @@ function callRubyFunction() {
   });
 }
 
-function encrypt(plaintext, cipher) {
+function encrypt() {
   console.log('Encrypting plaintext');
+  plaintext = $('#plaintext').val();
+  cipher = $('#cipher').val();
   $.ajax({
     url: '/encrypt',
     method: 'POST',

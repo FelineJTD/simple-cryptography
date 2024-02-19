@@ -19,28 +19,27 @@ class Cipher
 
   def encrypt
     puts "helloooo from encrypt???"
-    # case @cipher
-    # when 'vigenere'
-    #   @result = 'hello world'
-    # # when 'auto-key'
-    # #   @result = auto_key_encrypt
-    # # when 'extended'
-    # #   @result = extended_vigenere_encrypt
-    # # when 'playfair'
-    # #   @result = playfair_encrypt
-    # # when 'affine'
-    # #   @result = affine_encrypt
-    # # when 'hill'
-    # #   @result = hill_encrypt
-    # # when 'super'
-    # #   @result = super_encrypt
-    # # when 'enigma'
-    # #   @result = enigma_encrypt
-    # else
-    #   @result = 'Invalid cipher selection'
-    # end
-    # end
+    case @cipher
+    when 'vigenere'
+      @result = 'hello vigenere'
+    when 'auto-key'
+      @result = auto_key_encrypt
+    when 'extended'
+      @result = extended_vigenere_encrypt
+    when 'playfair'
+      @result = playfair_encrypt
+    when 'affine'
+      @result = affine_encrypt
+    when 'hill'
+      @result = hill_encrypt
+    when 'super'
+      @result = super_encrypt
+    when 'enigma'
+      @result = enigma_encrypt
+    else
+      @result = 'Invalid cipher selection'
+    end
 
-    "Hello world"
+    @result
   end
 end
