@@ -5,10 +5,18 @@ require 'json'
 
 # Load the model
 require_relative 'models/task'
+require_relative 'models/cipher'
 
 set :root, File.dirname(__FILE__)
 
-post '/encrypt' do
+get '/encrypt' do
+  puts "helloooo???"
+  # plaintext = Cipher(params[:plaintext], params[:cipher], params[:key])
+  result = Cipher.encrypt
+  { result: result }.to_json
+end
+
+post '/encryptgede' do
   # Get input type, data, key, and cipher selection
   input_type = params[:input_type]
   input_data = input_type == 'text' ? params[:input_text] : params[:input_file][:tempfile].read

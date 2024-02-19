@@ -9,8 +9,10 @@ ini pake Sinatra instead of Ruby on Rails, katanya sih lebih gampang dipelajarin
 3. run `rerun ruby app.rb`
 
 # note to self
-Gemfile is like package.json di react, isinya dependencies.
+- Gemfile is like package.json di react, isinya dependencies.
 `bundle add [gemname]` buat nambahin gem
+
+- APPARENTLY HRS <button type="button"></button> BARU JALAN LIKE WTF IT NEEDS TO SPECIFY THE TYPE IS BUTTON???!!
 
 # how to do fe-be
 - from the FE, call a function using js (public/js/whatever file you create for the function)
@@ -23,5 +25,6 @@ Gemfile is like package.json di react, isinya dependencies.
 chatgpt gives me the way with ajax and jquery, so I'm going with it.
 
 ## to debug
-- use the console (console.log) to debug js
-- see the Network tab to look at specific errors when fetch fails
+- use the console (console.log) to debug js (THIS PRINTS TO THE BROWSER CONSOLE)
+- see the Network tab to look at specific errors when fetch fails (IN THE BROWSER)
+- use puts in ruby (THIS PRINTS TO THE TERMINAL)

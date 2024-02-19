@@ -21,53 +21,68 @@
 <body>
   <div id="container">
     <h1>Encryption/Decryption App</h1>
-    <h1><%= @test %></h1>
-    <table>
-      <tr>
-        <td>Input Type:</td>
-        <td>
-          <select id="input-type">
-            <option value="text" selected>Text</option>
-            <option value="file">File</option>
-          </select>
-        </td>
-      </tr>
-      <tr class="dynamic-row-text">
-        <td>Input Text:</td>
-        <td><textarea id="input-text"></textarea></td>
-      </tr>
-      <tr class="dynamic-row-file">
-        <td>Input File:</td>
-        <td><input type="file" id="input-file" accept=".txt"></td>
-      </tr>
-      <tr>
-        <td>Cipher:</td>
-        <td>
-          <select id="cipher">
-            <option value="vigenere">Vigenere Cipher</option>
-            <option value="auto-key">Auto-Key Vigenere Cipher</option>
-            <option value="extended">Extended Vigenere Cipher</option>
-            <option value="playfair">Playfair Cipher</option>
-            <option value="affine">Affine Cipher</option>
-            <option value="hill">Hill Cipher</option>
-            <option value="super">Super Encryption</option>
-            <option value="enigma">Enigma Machine</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Key:</td>
-        <td><input type="text" id="input-key"></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><button>Encrypt</button><button>Decrypt</button></td>
-      </tr>
-    </table>
-    <div id="result"></div>
+    <form>
+      <table>
+        <tr>
+          <td>Input Type:</td>
+          <td>
+            <select id="input-type">
+              <option value="text" selected>Text</option>
+              <option value="file">File</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="dynamic-row-text">
+          <td>Input Text:</td>
+          <td><textarea id="input-text"></textarea></td>
+        </tr>
+        <tr class="dynamic-row-file">
+          <td>Input File:</td>
+          <td><input type="file" id="input-file" accept=".txt"></td>
+        </tr>
+        <tr>
+          <td>Cipher:</td>
+          <td>
+            <select id="cipher">
+              <option value="vigenere">Vigenere Cipher</option>
+              <option value="auto-key">Auto-Key Vigenere Cipher</option>
+              <option value="extended">Extended Vigenere Cipher</option>
+              <option value="playfair">Playfair Cipher</option>
+              <option value="affine">Affine Cipher</option>
+              <option value="hill">Hill Cipher</option>
+              <option value="super">Super Encryption</option>
+              <option value="enigma">Enigma Machine</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Key:</td>
+          <td><input type="text" id="input-key"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button 
+              type="button"
+              onclick="encrypt()"
+            >
+              Encrypt
+            </button>
+            <button>
+              Decrypt
+            </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <div id="response"></div>
   </div>
 
-  <script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/js/index.js"></script>
+
+
+  <%# <script>
     /* Existing JavaScript from your version for dynamic input handling */
     const inputTypeSelect = document.getElementById('input-type');
     const inputTextRow = document.querySelector('.dynamic-row-text');
@@ -110,6 +125,6 @@
         resultDiv.textContent = 'An error occurred: ' + error;
       });
     });
-  </script>
+  </script> %>
 </body>
 </html>
