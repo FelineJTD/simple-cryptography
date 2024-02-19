@@ -1,6 +1,10 @@
 # app.rb
 require 'sinatra'
 require 'base64'
+require 'json'
+
+# Load the model
+require_relative 'models/task'
 
 set :root, File.dirname(__FILE__)
 
@@ -84,10 +88,10 @@ get '/result' do
   erb :result
 end
 
-post '/call_ruby_function' do
+get '/call_ruby_function' do
   # Call the specific Ruby function in the model
   result = Task.hello_world # Replace with your actual function
 
   # Return a response (could be JSON, text, etc.)
-  text result
+  { result: result }.to_json
 end

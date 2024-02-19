@@ -9,7 +9,7 @@ class Task
     end
 
     # Additional methods for database interactions, validations, etc.
-    def self.hello_world_json
+    def self.hello_world
       "Hello world"
     end
   end

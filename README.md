@@ -11,3 +11,17 @@ ini pake Sinatra instead of Ruby on Rails, katanya sih lebih gampang dipelajarin
 # note to self
 Gemfile is like package.json di react, isinya dependencies.
 `bundle add [gemname]` buat nambahin gem
+
+# how to do fe-be
+- from the FE, call a function using js (public/js/whatever file you create for the function)
+- then the js will do GET/POST to an API in app.rb
+- the API will call a method from a model (models/whatever file you create for the method), don't forget to import this first di paling atas file app.rb
+- the method will do the logic, and return the result to the API
+- the API will return the result to the js
+- the js can inject the response to the FE
+
+chatgpt gives me the way with ajax and jquery, so I'm going with it.
+
+## to debug
+- use the console (console.log) to debug js
+- see the Network tab to look at specific errors when fetch fails
