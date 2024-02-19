@@ -1,4 +1,4 @@
-# models/cypher.rb
+# models/cipher.rb
 
 # a) Vigenere Cipher standard (26 huruf alfabet)
 # b) Varian Vigenere Cipher standard (26 huruf alfabet): Auto-Key Vigenere Cipher
@@ -21,6 +21,9 @@ class Cipher
     puts "helloooo from encrypt???"
     case @cipher
     when 'vigenere'
+      puts @plaintext
+      puts @cipher
+      puts @key
       @result = 'hello vigenere'
     when 'auto-key'
       @result = auto_key_encrypt

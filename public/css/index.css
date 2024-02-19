@@ -1,0 +1,11 @@
+/* Table used only to make things neat uwu */
+table {
+    width: 400px;
+    border-collapse: collapse;
+    border: none;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid transparent;
+}
