@@ -97,4 +97,16 @@ class Cipher
     @key += @plaintext
     vigenere_encrypt
   end
+
+  def auto_key_decrypt
+    self.sanitize
+    @plaintext = ''
+    for i in 0..@ciphertext.length-1
+      if i < key.length
+        @plaintext += ((((@ciphertext[i].ord - 65) - (@key[i].ord - 65)) + 26) % 26 + 65).chr
+      else
+        @plaintext += ((((@ciphertext[i].ord - 65) - (@plaintext[i - @key.length].ord - 65)) + 26) % 26 + 65).chr
+      end
+    end
+  end
 end
