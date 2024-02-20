@@ -81,7 +81,7 @@ class Cipher
     self.sanitize
     @ciphertext = ''
     for i in 0..@plaintext.length-1
-      @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 64)) % 26 + 65).chr
+      @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 65)) % 26 + 65).chr
     end
   end
 
@@ -89,7 +89,9 @@ class Cipher
     self.sanitize
     @plaintext = ''
     for i in 0..@ciphertext.length-1
-      @plaintext += ((((@ciphertext[i].ord - 65) - (@key[i % @key.length].ord - 64)) + 26) % 26 + 65).chr
+      @plaintext += ((((@ciphertext[i].ord - 65) - (@key[i % @key.length].ord - 65)) + 26) % 26 + 65).chr
     end
   end
+
+
 end
