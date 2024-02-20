@@ -93,5 +93,8 @@ class Cipher
     end
   end
 
-
+  def auto_key_encrypt
+    @key += @plaintext
+    vigenere_encrypt
+  end
 end
