@@ -17,12 +17,12 @@ function encrypt() {
     var reader = new FileReader();
     reader.onload = function(e) {
       plaintext = e.target.result;
-      callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key });
+      callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
     }
     reader.readAsText(file);
   }
   else {
-    callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key });
+    callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
   }
 }
 
@@ -58,12 +58,12 @@ function decrypt() {
     var reader = new FileReader();
     reader.onload = function(e) {
       ciphertext = e.target.result;
-      callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key });
+      callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
     }
     reader.readAsText(file);
   }
   else {
-    callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key });
+    callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
   }
 }
 

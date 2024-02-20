@@ -10,15 +10,15 @@
 # h) Bonus: Enigma Machine (26 huruf alfabet)
 
 class Cipher
-  attr_accessor :plaintext, :cipher, :key, :ciphertext
+  attr_accessor :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b
 
   def initialize(plaintext, cipher, key, ciphertext, key_a, key_b)
     @plaintext = plaintext
     @cipher = cipher
     @key = key
     @ciphertext = ciphertext
-    @key_a = key_a
-    @key_b = key_b
+    @key_a = key_a.to_i
+    @key_b = key_b.to_i
   end
 
   def sanitize
@@ -145,11 +145,34 @@ class Cipher
   end
 
   def affine_encrypt
-    # @GEDE TODO
+    self.sanitize
+
+    puts @key_a, " this is key a"
+    puts @key_b, " this is key b"
+
+    if @key_a == '' || @key_b == ''
+      @ciphertext = 'Invalid key'
+      return
+    end
+
+    @ciphertext = ''
+    for i in 0..@plaintext.length-1
+      @ciphertext += (((@plaintext[i].ord - 65) * @key_a + @key_b) % 26 + 65).chr
+    end
   end
 
   def affine_decrypt
-    # @GEDE TODO
+    self.sanitize
+
+    if @key_a == '' || @key_b == ''
+      @plaintext = 'Invalid key'
+      return
+    end
+
+    @plaintext = ''
+    for i in 0..@ciphertext.length-1
+      @plaintext += (((26.to_pow(-1, key_a) % 26) * (@key_b - @ciphertext[i].ord - 65).abs) % 26 + 65).chr
+    end
   end
 
   def hill_encrypt

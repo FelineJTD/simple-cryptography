@@ -13,13 +13,14 @@ get '/' do
 end
 
 post '/encrypt' do
-  plaintext = Cipher.new(params[:plaintext], params[:cipher], params[:key], '')
+  puts params
+  plaintext = Cipher.new(params[:plaintext], params[:cipher], params[:key], '', params[:affine_key_a], params[:affine_key_b])
   result = plaintext.encrypt
   { result: result }.to_json
 end
 
 post '/decrypt' do
-  ciphertext = Cipher.new('', params[:cipher], params[:key], params[:ciphertext])
+  ciphertext = Cipher.new('', params[:cipher], params[:key], params[:ciphertext], params[:affine_key_a], params[:affine_key_b])
   result = ciphertext.decrypt
   { result: result }.to_json
 end
