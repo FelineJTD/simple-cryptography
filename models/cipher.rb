@@ -109,4 +109,11 @@ class Cipher
       end
     end
   end
+
+  def extended_vigenere_encrypt
+    @ciphertext = ''
+    for i in 0..@plaintext.length-1
+      @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 65)) % 256 + 65).to_s
+    end
+  end
 end
