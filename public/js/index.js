@@ -17,3 +17,21 @@ function encrypt() {
     }
   });
 }
+
+function decrypt() {
+  console.log('Decrypting ciphertext');
+  ciphertext = $('#input-text').val();
+  cipher = $('#cipher').val();
+  key = $('#input-key').val();
+  $.ajax({
+    url: '/decrypt',
+    method: 'POST',
+    data: { ciphertext: ciphertext, cipher: cipher, key: key },
+    success: function(response) {
+      $('#response').html(response);
+    },
+    error: function(error) {
+      console.error(error);
+    }
+  });
+}

@@ -11,10 +11,11 @@
 class Cipher
   attr_accessor :plaintext, :cipher, :key, :ciphertext
 
-  def initialize(plaintext, cipher, key)
+  def initialize(plaintext, cipher, key, ciphertext)
     @plaintext = plaintext
     @cipher = cipher
     @key = key
+    @ciphertext = ciphertext
   end
 
   def sanitize
@@ -22,6 +23,7 @@ class Cipher
     # For all ciphers except extended vigenere
     @plaintext = @plaintext.gsub(/[^a-zA-Z]/, '').upcase
     @key = @key.gsub(/[^a-zA-Z]/, '').upcase
+    @ciphertext = @ciphertext.gsub(/[^a-zA-Z]/, '').upcase
   end
 
   def encrypt
@@ -31,11 +33,7 @@ class Cipher
       self.sanitize
       @ciphertext = ''
       for i in 0..@plaintext.length-1
-        if @plaintext[i] != ' '
-          @ciphertext += ((@plaintext[i].ord - 64 + @key[i % @key.length].ord - 64) % 26 + 64).chr
-        else
-          @ciphertext += ' '
-        end
+        @ciphertext += (((@plaintext[i].ord - 64) + (@key[i % @key.length].ord - 64)) % 26 + 64).chr
       end
     when 'auto-key'
       @ciphertext = auto_key_encrypt
@@ -56,5 +54,35 @@ class Cipher
     end
 
     @ciphertext
+  end
+
+  def decrypt
+    puts "helloooo from decrypt???"
+    case @cipher
+    when 'vigenere'
+      self.sanitize
+      @plaintext = ''
+      for i in 0..@ciphertext.length-1
+        @plaintext += (((@ciphertext[i].ord - 64) - (@key[i % @key.length].ord - 64)) % 26 + 64).chr
+      end
+    when 'auto-key'
+      @plaintext = auto_key_decrypt
+    when 'extended'
+      @plaintext = extended_vigenere_decrypt
+    when 'playfair'
+      @plaintext = playfair_decrypt
+    when 'affine'
+      @plaintext = affine_decrypt
+    when 'hill'
+      @plaintext = hill_decrypt
+    when 'super'
+      @plaintext = super_decrypt
+    when 'enigma'
+      @plaintext = enigma_decrypt
+    else
+      @plaintext = 'Invalid cipher selection'
+    end
+
+    @plaintext
   end
 end
