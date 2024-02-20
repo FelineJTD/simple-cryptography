@@ -9,7 +9,7 @@
 # g) Super enkripsi: gabungan Extended Vigenere Cipher dan cipher transposisi (metode kolom)
 
 class Cipher
-  attr_accessor :plaintext, :cipher, :key, :result
+  attr_accessor :plaintext, :cipher, :key, :ciphertext
 
   def initialize(plaintext, cipher, key)
     @plaintext = plaintext
@@ -17,37 +17,44 @@ class Cipher
     @key = key
   end
 
+  def sanitize
+    # Throws away everything except a-z, A-Z (26 huruf alfabet)
+    # For all ciphers except extended vigenere
+    @plaintext = @plaintext.gsub(/[^a-zA-Z]/, '').upcase
+    @key = @key.gsub(/[^a-zA-Z]/, '').upcase
+  end
+
   def encrypt
     puts "helloooo from encrypt???"
     case @cipher
     when 'vigenere'
-      # Asumsi case sensitive (A berarti shift 1, a berarti shift 33)
-      @result = ''
+      self.sanitize
+      @ciphertext = ''
       for i in 0..@plaintext.length-1
         if @plaintext[i] != ' '
-          @result += ((@plaintext[i].ord - 64 + @key[i % @key.length].ord - 64) % 26 + 64).chr
+          @ciphertext += ((@plaintext[i].ord - 64 + @key[i % @key.length].ord - 64) % 26 + 64).chr
         else
-          @result += ' '
+          @ciphertext += ' '
         end
       end
     when 'auto-key'
-      @result = auto_key_encrypt
+      @ciphertext = auto_key_encrypt
     when 'extended'
-      @result = extended_vigenere_encrypt
+      @ciphertext = extended_vigenere_encrypt
     when 'playfair'
-      @result = playfair_encrypt
+      @ciphertext = playfair_encrypt
     when 'affine'
-      @result = affine_encrypt
+      @ciphertext = affine_encrypt
     when 'hill'
-      @result = hill_encrypt
+      @ciphertext = hill_encrypt
     when 'super'
-      @result = super_encrypt
+      @ciphertext = super_encrypt
     when 'enigma'
-      @result = enigma_encrypt
+      @ciphertext = enigma_encrypt
     else
-      @result = 'Invalid cipher selection'
+      @ciphertext = 'Invalid cipher selection'
     end
 
-    @result
+    @ciphertext
   end
 end
