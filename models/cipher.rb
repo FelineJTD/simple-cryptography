@@ -79,6 +79,12 @@ class Cipher
   # ALGO STARTS HERE
   def vigenere_encrypt
     self.sanitize
+
+    if @key == ''
+      @ciphertext = 'Invalid key'
+      return
+    end
+
     @ciphertext = ''
     for i in 0..@plaintext.length-1
       @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 65)) % 26 + 65).chr
@@ -87,6 +93,12 @@ class Cipher
 
   def vigenere_decrypt
     self.sanitize
+
+    if @key == ''
+      @plaintext = 'Invalid key'
+      return
+    end
+
     @plaintext = ''
     for i in 0..@ciphertext.length-1
       @plaintext += ((((@ciphertext[i].ord - 65) - (@key[i % @key.length].ord - 65)) + 26) % 26 + 65).chr
