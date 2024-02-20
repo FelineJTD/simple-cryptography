@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-  <div id="container">
+  <div class="main-container">
     <h1>Encryption/Decryption App</h1>
     <form>
       <table>
@@ -21,8 +21,14 @@
           </td>
         </tr>
         <tr class="dynamic-row-text">
-          <td>Input Text:</td>
-          <td><textarea id="input-text"></textarea></td>
+          <td>Input Text (string):</td>
+          <td>
+            <textarea id="input-text"></textarea>
+          </td>
+          <td>Input Text (base64):</td>
+          <td>
+            <textarea id="input-text-64" readonly></textarea>
+          </td>
         </tr>
         <tr class="dynamic-row-file">
           <td>Input File:</td>
@@ -48,15 +54,18 @@
           <td><input type="text" id="input-key"></td>
         </tr>
         <tr>
-          <td></td>
-          <td>
+          <td colspan="2">
             <button 
+              class="button-primary"
               type="button"
               onclick="encrypt()"
             >
               Encrypt
             </button>
+          </td>
+          <td colspan="2">
             <button
+              class="button-primary"
               type="button"
               onclick="decrypt()"
             >
@@ -64,9 +73,18 @@
             </button>
           </td>
         </tr>
+        <tr>
+          <td>Result (string):</td>
+          <td>
+            <textarea id="response" readonly></textarea>
+          </td>
+          <td>Result (base64):</td>
+          <td>
+            <textarea id="response-64" readonly></textarea>
+          </td>
+        </tr>
       </table>
     </form>
-    <div id="response"></div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

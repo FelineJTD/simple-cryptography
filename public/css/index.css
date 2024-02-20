@@ -9,3 +9,14 @@ td {
     padding: 10px;
     border-bottom: 1px solid transparent;
 }
+
+.button-primary {
+    width: 30vw;
+    height: 3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.main-container {
+    width: 100%;
+}
