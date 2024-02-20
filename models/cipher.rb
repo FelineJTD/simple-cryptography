@@ -128,4 +128,48 @@ class Cipher
       @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 65)) % 256 + 65).to_s
     end
   end
+
+  def extended_vigenere_decrypt
+
+  end
+
+  def playfair_encrypt
+
+  end
+
+  def playfair_decrypt
+
+  end
+
+  def affine_encrypt
+    # @GEDE TODO
+  end
+
+  def affine_decrypt
+    # @GEDE TODO
+  end
+
+  def hill_encrypt
+    # @GEDE TODO
+  end
+
+  def hill_decrypt
+    # @GEDE TODO
+  end
+
+  def super_encrypt
+    # @GEDE TODO
+  end
+
+  def super_decrypt
+    # @GEDE TODO
+  end
+
+  def enigma_encrypt
+    # @GEDE TODO
+  end
+
+  def enigma_decrypt
+    # @GEDE TODO
+  end
 end
