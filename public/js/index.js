@@ -8,6 +8,8 @@ function encrypt() {
   plaintext = $('#input-text').val();
   cipher = $('#cipher').val();
   key = $('#input-key').val();
+  affine_key_a = $('#input_key_a').val();
+  affine_key_b = $('#input_key_b').val();
 
   // read file
   if (type == 'file') {
@@ -48,6 +50,8 @@ function decrypt() {
   ciphertext = $('#input-text').val();
   cipher = $('#cipher').val();
   key = $('#input-key').val();
+  affine_key_a = $('#input-key-1').val();
+  affine_key_b = $('#input-key-2').val();
 
   if (type == 'file') {
     var file = document.getElementById('input-file').files[0];

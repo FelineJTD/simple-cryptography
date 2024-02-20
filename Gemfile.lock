@@ -12,6 +12,7 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     formatador (1.1.0)
     guard (2.18.1)
       formatador (>= 0.2.4)
@@ -47,6 +48,8 @@ GEM
     nokogiri (1.16.2-arm-linux)
       racc (~> 1.4)
     nokogiri (1.16.2-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.2-x64-mingw-ucrt)
       racc (~> 1.4)
     nokogiri (1.16.2-x86-linux)
       racc (~> 1.4)
@@ -96,6 +99,7 @@ PLATFORMS
   aarch64-linux
   arm-linux
   arm64-darwin
+  x64-mingw-ucrt
   x86-linux
   x86_64-darwin
   x86_64-linux
@@ -104,8 +108,6 @@ DEPENDENCIES
   base64
   guard (~> 2.18)
   guard-livereload (~> 2.5)
-  nokogiri
-  racc (~> 1.7)
   rackup (~> 2.1)
   rerun (~> 0.14.0)
   sinatra

@@ -7,15 +7,18 @@
 # e) Affine Cipher (26 huruf alfabet)
 # f) Hill Cipher (26 huruf alfabet)
 # g) Super enkripsi: gabungan Extended Vigenere Cipher dan cipher transposisi (metode kolom)
+# h) Bonus: Enigma Machine (26 huruf alfabet)
 
 class Cipher
   attr_accessor :plaintext, :cipher, :key, :ciphertext
 
-  def initialize(plaintext, cipher, key, ciphertext)
+  def initialize(plaintext, cipher, key, ciphertext, key_a, key_b)
     @plaintext = plaintext
     @cipher = cipher
     @key = key
     @ciphertext = ciphertext
+    @key_a = key_a
+    @key_b = key_b
   end
 
   def sanitize
