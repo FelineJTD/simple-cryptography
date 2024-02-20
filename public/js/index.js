@@ -30,7 +30,8 @@ function callEncrypt(data) {
     method: 'POST',
     data: data,
     success: function(response) {
-      $('#response').val(response);
+      res = JSON.parse(response);
+      $('#response').val(res.result);
     },
     error: function(error) {
       console.error(error);
@@ -68,7 +69,10 @@ function callDecrypt(data) {
     method: 'POST',
     data: data,
     success: function(response) {
-      $('#response').html(response.result);
+      res = JSON.parse(response);
+      console.log(res);
+      $('#response').val(res.result);
+      $('#response-64').val(btoa(res.result));
     },
     error: function(error) {
       console.error(error);
@@ -81,9 +85,4 @@ function callDecrypt(data) {
 // on change of #input-text, update #input-text-64 to display base64 encoded text
 $('#input-text').on('input', function() {
   $('#input-text-64').val(btoa($('#input-text').val()));
-});
-
-// on change of #input-text-64, update #input-text to display base64 decoded text
-$('#input-text-64').on('change', function() {
-  $('#input-text').val(atob($('#input-text-64').val()));
 });
