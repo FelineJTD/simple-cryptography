@@ -27,28 +27,23 @@ class Cipher
   end
 
   def encrypt
-    puts "helloooo from encrypt???"
     case @cipher
     when 'vigenere'
-      self.sanitize
-      @ciphertext = ''
-      for i in 0..@plaintext.length-1
-        @ciphertext += (((@plaintext[i].ord - 64) + (@key[i % @key.length].ord - 64)) % 26 + 64).chr
-      end
+      vigenere_encrypt
     when 'auto-key'
-      @ciphertext = auto_key_encrypt
+      auto_key_encrypt
     when 'extended'
-      @ciphertext = extended_vigenere_encrypt
+      extended_vigenere_encrypt
     when 'playfair'
-      @ciphertext = playfair_encrypt
+      playfair_encrypt
     when 'affine'
-      @ciphertext = affine_encrypt
+      affine_encrypt
     when 'hill'
-      @ciphertext = hill_encrypt
+      hill_encrypt
     when 'super'
-      @ciphertext = super_encrypt
+      super_encrypt
     when 'enigma'
-      @ciphertext = enigma_encrypt
+      enigma_encrypt
     else
       @ciphertext = 'Invalid cipher selection'
     end
@@ -57,32 +52,44 @@ class Cipher
   end
 
   def decrypt
-    puts "helloooo from decrypt???"
     case @cipher
     when 'vigenere'
-      self.sanitize
-      @plaintext = ''
-      for i in 0..@ciphertext.length-1
-        @plaintext += (((@ciphertext[i].ord - 64) - (@key[i % @key.length].ord - 64)) % 26 + 64).chr
-      end
+      vigenere_decrypt
     when 'auto-key'
-      @plaintext = auto_key_decrypt
+      auto_key_decrypt
     when 'extended'
-      @plaintext = extended_vigenere_decrypt
+      extended_vigenere_decrypt
     when 'playfair'
-      @plaintext = playfair_decrypt
+      playfair_decrypt
     when 'affine'
-      @plaintext = affine_decrypt
+      affine_decrypt
     when 'hill'
-      @plaintext = hill_decrypt
+      hill_decrypt
     when 'super'
-      @plaintext = super_decrypt
+      super_decrypt
     when 'enigma'
-      @plaintext = enigma_decrypt
+      enigma_decrypt
     else
       @plaintext = 'Invalid cipher selection'
     end
 
     @plaintext
+  end
+
+  # ALGO STARTS HERE
+  def vigenere_encrypt
+    self.sanitize
+    @ciphertext = ''
+    for i in 0..@plaintext.length-1
+      @ciphertext += (((@plaintext[i].ord - 64) + (@key[i % @key.length].ord - 64)) % 26 + 64).chr
+    end
+  end
+
+  def vigenere_decrypt
+    self.sanitize
+    @plaintext = ''
+    for i in 0..@ciphertext.length-1
+      @plaintext += ((((@ciphertext[i].ord - 64) - (@key[i % @key.length].ord - 64)) + 26) % 26 + 64).chr
+    end
   end
 end
