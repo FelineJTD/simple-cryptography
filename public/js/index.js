@@ -104,7 +104,7 @@ function decrypt() {
       const ciphertext = e.target.result;
       callDecrypt({ type: type, file_extension: fileExtension, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
     };
-    reader.readAsArrayBuffer(file);
+    reader.readAsText(file);
   } else {
     callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
   }
