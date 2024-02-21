@@ -20,7 +20,7 @@ post '/encrypt' do
 end
 
 post '/decrypt' do
-  ciphertext = Cipher.new(params[:type], '', params[:cipher], params[:key], params[:ciphertext], params[:affine_key_a], params[:affine_key_b], params[:matrix_size], params[:matrix])
+  ciphertext = Cipher.new(params[:type], '', params[:cipher], params[:key], params[:ciphertext], params[:affine_key_a], params[:affine_key_b], params[:matrix_size], params[:matrix], params[:file_extension] || '')
   result = ciphertext.decrypt
   { result: result }.to_json
 end
