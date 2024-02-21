@@ -16,23 +16,13 @@ function encrypt() {
   // read file
   if (type == 'file') {
     var file = document.getElementById('input-file').files[0];
-    if (file.type === 'text/plain') {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        plaintext = e.target.result;
-        callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
-      }
-      reader.readAsText(file);
-    } else { // other file types, pass as array of ascii values
-      console.log('File type: ' + file.type);
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        const byteArray = new Uint8Array(e.target.result);
-        callEncrypt({ type: type, plaintext: byteArray, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
-      };
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      const byteArray = new Uint8Array(e.target.result);
+      callEncrypt({ type: type, plaintext: byteArray, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
+    };
 
-      reader.readAsArrayBuffer(file);
-    }
+    reader.readAsArrayBuffer(file);
   }
   else {
     callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
