@@ -169,9 +169,21 @@ class Cipher
       return
     end
 
+    puts @key_a, " this is key a"
+    puts @key_b, " this is key b"
+
+    coef = 1
+    for i in 1..25
+      if (i * @key_a) % 26 == 1
+        coef = i
+        break
+      end
+    end
+
+
     @plaintext = ''
     for i in 0..@ciphertext.length-1
-      @plaintext += (((26.to_pow(-1, key_a) % 26) * (@key_b - @ciphertext[i].ord - 65).abs) % 26 + 65).chr
+      @plaintext += (((@ciphertext[i].ord - 65 - @key_b) * coef) % 26 + 65).chr
     end
   end
 
