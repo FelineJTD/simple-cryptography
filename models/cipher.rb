@@ -146,6 +146,17 @@ class Cipher
       for i in 0..@plaintext.length-1
         @ciphertext.append((@plaintext[i.to_s].to_i + @key[i % @key.length].ord) % 256)
       end
+      print @plaintext['0'], " zero, "
+      print @plaintext['1'], " one, "
+      print @plaintext['2'], " two, "
+      print @plaintext['3'], " three, "
+      print @plaintext['4'], " four, "
+      print @plaintext['5'], " five, "
+      print @plaintext['6'], " six, "
+      print @plaintext['7'], " seven, "
+      print @plaintext['8'], " eight, "
+      print @plaintext['9'], " nine, "
+      print @plaintext['10'], " ten, "
     end
   end
 
@@ -158,8 +169,19 @@ class Cipher
     else # file
       @plaintext = []
       for i in 0..@ciphertext.length-1
-        @plaintext.append((@ciphertext[i.to_s].to_i - @key[i % @key.length].ord + 256) % 256)
+        @plaintext.append(((@ciphertext[i.to_s].to_i - @key[i % @key.length].ord) + 256) % 256)
       end
+      print @ciphertext['0'], " zero, "
+      print @ciphertext['1'], " one, "
+      print @ciphertext['2'], " two, "
+      print @ciphertext['3'], " three, "
+      print @ciphertext['4'], " four, "
+      print @ciphertext['5'], " five, "
+      print @ciphertext['6'], " six, "
+      print @ciphertext['7'], " seven, "
+      print @ciphertext['8'], " eight, "
+      print @ciphertext['9'], " nine, "
+      print @ciphertext['10'], " ten, "
     end
   end
 

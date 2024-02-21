@@ -40,8 +40,8 @@ function callEncrypt(data) {
       $('#response-64').val(btoa(res.result));
       if (data.type == 'file') {
         // download file
-        const charResult = String.fromCharCode.apply(null, res.result);
-        const blob = new Blob([charResult], { type: 'application/octet-stream' });
+        const reconstructed = new Uint8Array(res.result);
+        const blob = new Blob([reconstructed], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -100,8 +100,8 @@ function callDecrypt(data) {
       $('#response-64').val(btoa(res.result));
       if (data.type == 'file') {
         // download file
-        const charResult = String.fromCharCode.apply(null, res.result);
-        const blob = new Blob([charResult], { type: 'application/octet-stream' });
+        const reconstructed = new Uint8Array(res.result);
+        const blob = new Blob([reconstructed], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
