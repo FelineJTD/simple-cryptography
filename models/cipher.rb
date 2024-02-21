@@ -20,7 +20,7 @@ class Cipher
     @ciphertext = ciphertext
     @key_a = key_a.to_i
     @key_b = key_b.to_i
-    @matrix_size = matrix_size
+    @matrix_size = matrix_size.to_i
     @matrix = matrix
   end
 
@@ -205,6 +205,24 @@ class Cipher
 
   def hill_encrypt
     self.sanitize
+
+    puts @matrix_size, "this is matrix size"
+    puts @matrix, "this is matrix"
+    puts @matrix.length, "this is matrix length"
+
+    if (@matrix_size ** 2) != @matrix.length
+      @ciphertext = "Incorrect matrix size or input"
+      return
+    end
+
+    if @plaintext.length % @matrix_size != 0
+      for i in 0..(@plaintext.length % @matrix_size) - 1
+        @plaintext += 'X'
+      end
+    end
+
+    puts @plaintext
+
   end
 
   def hill_decrypt
