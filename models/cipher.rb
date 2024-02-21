@@ -317,10 +317,6 @@ class Cipher
   def hill_encrypt
     self.sanitize
 
-    puts @matrix_size, "this is matrix size"
-    puts @matrix, "this is matrix"
-    puts @matrix.length, "this is matrix length"
-
     if (@matrix_size ** 2) != @matrix.length
       @ciphertext = "Incorrect matrix size or input"
       return
@@ -340,7 +336,6 @@ class Cipher
         for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
           selected_substring = substrings[substring_idx]
           temp_ord_value += @matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
-          print "row_idx: ", row_idx, " col_idx: ", col_idx, " selected_substring: ", selected_substring, " selected_substring[col_idx]: ", selected_substring[col_idx], " ", (selected_substring[col_idx]).ord - 65, " ", @matrix[@matrix_size * row_idx + col_idx], " ", temp_ord_value, "\n"
         end
         @ciphertext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).chr
       end
@@ -349,6 +344,39 @@ class Cipher
 
   def hill_decrypt
     self.sanitize
+
+    if (@matrix_size ** 2) != @matrix.length
+      @ciphertext = "Incorrect matrix size or input"
+      return
+    end
+
+    if @plaintext.length % @matrix_size != 0
+      for i in 0..(@plaintext.length % @matrix_size) - 1
+        @plaintext += 'X'
+      end
+    end
+
+  inverse_matrix = Matrix.[](*@matrix.each_slice(@matrix_size).to_a).inverse
+
+  # Convert inverse_matrix back to 1D array
+  inverse_matrix = inverse_matrix.to_a.flatten
+
+  puts inverse_matrix.class, "this is inverse matrix type"
+
+  substrings = @ciphertext.scan(/.{1,#{@matrix_size}}/)
+
+  for substring_idx in 0..substrings.length-1 # this loops for every substring
+    for row_idx in 0..@matrix_size-1 # this loops for the encryption matrix row
+      temp_ord_value = 0
+      for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
+        selected_substring = substrings[substring_idx]
+        temp_ord_value += inverse_matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
+        print "row: ", row_idx, " col: ", col_idx, " temp_ord_value mod 26: ", temp_ord_value % 26, " type of temp_ord_value mod 26: ", (temp_ord_value % 26).class, "\n"
+      end
+      @plaintext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).to_i.chr
+    end
+  end
+
   end
 
   def super_encrypt
