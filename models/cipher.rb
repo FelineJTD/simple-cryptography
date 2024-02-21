@@ -196,7 +196,6 @@ class Cipher
     # encrypt
     @ciphertext = ''
 
-    i = 0
     while @plaintext.length > 0
       # if odd length, add X
       if @plaintext.length == 1
@@ -207,9 +206,9 @@ class Cipher
         @plaintext = @plaintext[0, 1] + 'X' + @plaintext[1, @plaintext.length]
       end
       # first letter
-      idx1 = @matrix.find_index(@plaintext[i])
+      idx1 = @matrix.find_index(@plaintext[0])
       # second letter
-      idx2 = @matrix.find_index(@plaintext[i + 1])
+      idx2 = @matrix.find_index(@plaintext[1])
 
       # same row
       if idx1[0] == idx2[0]
