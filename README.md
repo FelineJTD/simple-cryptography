@@ -31,5 +31,4 @@ chatgpt gives me the way with ajax and jquery, so I'm going with it.
 
 # TODO
 - handle unprintable charas in extended vigenere
-- handle file extension in extended vigenere
 - add download as binary button
