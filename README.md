@@ -28,3 +28,8 @@ chatgpt gives me the way with ajax and jquery, so I'm going with it.
 - use the console (console.log) to debug js (THIS PRINTS TO THE BROWSER CONSOLE)
 - see the Network tab to look at specific errors when fetch fails (IN THE BROWSER)
 - use puts in ruby (THIS PRINTS TO THE TERMINAL)
+
+# TODO
+- handle unprintable charas in extended vigenere
+- handle file extension in extended vigenere
+- add download as binary button
