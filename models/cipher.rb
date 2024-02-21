@@ -10,9 +10,10 @@
 # h) Bonus: Enigma Machine (26 huruf alfabet)
 
 class Cipher
-  attr_accessor :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b
+  attr_accessor :type, :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b
 
-  def initialize(plaintext, cipher, key, ciphertext, key_a, key_b)
+  def initialize(type, plaintext, cipher, key, ciphertext, key_a, key_b)
+    @type = type
     @plaintext = plaintext
     @cipher = cipher
     @key = key
@@ -127,8 +128,9 @@ class Cipher
 
   def extended_vigenere_encrypt
     @ciphertext = ''
+    puts @type, " this is type"
     for i in 0..@plaintext.length-1
-      @ciphertext += (((@plaintext[i].ord - 65) + (@key[i % @key.length].ord - 65)) % 256 + 65).to_s
+      @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256 + 65).to_s
     end
   end
 
