@@ -50,11 +50,14 @@ function callEncrypt(data) {
       res = JSON.parse(response);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
-      if (data.type == 'file') {
+      if (data.type == 'file' || data.cipher == 'extended') {
         // download file
         var blob;
         if (data.cipher == 'extended') {
           const reconstructed = new Uint8Array(res.result);
+          // try to display in #response
+          const str = String.fromCharCode.apply(null, reconstructed);
+          $('#response').val(str);
           blob = new Blob([reconstructed], { type: 'application/octet-stream' });
         } else {
           blob = new Blob([res.result], { type: 'application/octet-stream' });
@@ -62,12 +65,10 @@ function callEncrypt(data) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `encrypted.${data.file_extension}`;
+        a.download = `encrypted.${data.file_extension || 'txt'}`;
         a.id = 'download-link';
         document.body.appendChild(a);
         a.click();
-        // window.URL.revokeObjectURL(url);
-        // document.body.removeChild(a);
       }
     },
     error: function(error) {
@@ -127,11 +128,14 @@ function callDecrypt(data) {
       console.log(res);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
-      if (data.type == 'file') {
+      if (data.type == 'file' || data.cipher == 'extended') {
         // download file
         var blob;
         if (data.cipher == 'extended') {
           const reconstructed = new Uint8Array(res.result);
+          // try to display in #response
+          const str = String.fromCharCode.apply(null, reconstructed);
+          $('#response').val(str);
           blob = new Blob([reconstructed], { type: 'application/octet-stream' });
         } else {
           blob = new Blob([res.result], { type: 'application/octet-stream' });
@@ -139,12 +143,10 @@ function callDecrypt(data) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `decrypted.${data.file_extension}`;
+        a.download = `decrypted.${data.file_extension || 'txt'}`;
         a.id = 'download-link';
         document.body.appendChild(a);
         a.click();
-        // window.URL.revokeObjectURL(url);
-        // document.body.removeChild(a);
       }
     },
     error: function(error) {

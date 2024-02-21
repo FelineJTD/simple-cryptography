@@ -160,9 +160,9 @@ class Cipher
 
   def extended_vigenere_encrypt
     if (@type === 'text')
-      @ciphertext = ''
+      @ciphertext = []
       for i in 0..@plaintext.length-1
-        @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256).chr
+        @ciphertext.append(((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256)
       end
     else # file
       @ciphertext = []
@@ -174,9 +174,9 @@ class Cipher
 
   def extended_vigenere_decrypt
     if (@type === 'text')
-      @plaintext = ''
+      @plaintext = []
       for i in 0..@ciphertext.length-1
-        @plaintext += (((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256).chr
+        @plaintext.append(((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256)
       end
     else # file
       @plaintext = []
