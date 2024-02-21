@@ -9,6 +9,8 @@
 # g) Super enkripsi: gabungan Extended Vigenere Cipher dan cipher transposisi (metode kolom)
 # h) Bonus: Enigma Machine (26 huruf alfabet)
 
+require 'matrix'
+
 class Cipher
   attr_accessor :type, :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b, :matrix_size, :matrix, :file_extension
 
@@ -57,14 +59,7 @@ class Cipher
       end
     end
     # Parse as matrix
-    @matrix = []
-    for i in 0..4
-      temp = []
-      for j in 0..4
-        temp.append([key_array[i*5+j]])
-      end
-      @matrix.append(temp)
-    end
+    @matrix = Matrix.build(5) { |row, col| key_array[row * 5 + col] }
   end
 
   def encrypt
@@ -194,10 +189,33 @@ class Cipher
   def playfair_encrypt
     self.sanitize
     self.parse_keyword_playfair
+
+    modified_plaintext = ''
+    # insert X between double letters
+    for i in 0..@plaintext.length-1
+      modified_plaintext += @plaintext[i]
+      if i < @plaintext.length - 1 && @plaintext[i] == @plaintext[i + 1]
+        modified_plaintext += 'X'
+      end
+    end
+
+    # add padding if odd length
+    if modified_plaintext.length % 2 != 0
+      modified_plaintext += 'X'
+    end
+
+    # replace J with I
+    modified_plaintext = modified_plaintext.gsub('J', 'I')
+
+    # encrypt
+    @ciphertext = ''
+
+    @ciphertext
   end
 
   def playfair_decrypt
-
+    self.sanitize
+    self.parse_keyword_playfair
   end
 
   def affine_encrypt
