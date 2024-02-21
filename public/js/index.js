@@ -98,6 +98,19 @@ function callDecrypt(data) {
       console.log(res);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
+      if (data.type == 'file') {
+        // download file
+        const charResult = String.fromCharCode.apply(null, res.result);
+        const blob = new Blob([charResult], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `decrypted.${data.file_extension}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
     },
     error: function(error) {
       console.error(error);

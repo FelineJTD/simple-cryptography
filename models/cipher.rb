@@ -150,7 +150,17 @@ class Cipher
   end
 
   def extended_vigenere_decrypt
-
+    if (@type === 'text')
+      @plaintext = ''
+      for i in 0..@ciphertext.length-1
+        @plaintext += (((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256).to_s
+      end
+    else # file
+      @plaintext = []
+      for i in 0..@ciphertext.length-1
+        @plaintext.append((@ciphertext[i.to_s].to_i - @key[i % @key.length].ord + 256) % 256)
+      end
+    end
   end
 
   def playfair_encrypt
