@@ -239,14 +239,15 @@ class Cipher
     @plaintext = ''
 
     while @ciphertext.length > 0
-      # if odd length, add X
-      # if @plaintext.length == 1
-      #   @plaintext += 'X'
-      # end
-      # if same letter, insert X
-      # if @plaintext[0] == @plaintext[1]
-      #   @plaintext = @plaintext[0, 1] + 'X' + @plaintext[1, @plaintext.length]
-      # end
+      # if odd length, add X (also shouldn't be necessary, but just in case)
+      if @ciphertext.length == 1
+        @ciphertext += 'X'
+      end
+      # if same letter, the ciphertext really is broken.
+      if @ciphertext[0] == @ciphertext[1]
+        @plaintext = 'Invalid ciphertext'
+        return
+      end
       # first letter
       idx1 = @matrix.find_index(@ciphertext[0])
       # second letter
