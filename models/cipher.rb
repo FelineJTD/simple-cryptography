@@ -139,7 +139,7 @@ class Cipher
     if (@type === 'text')
       @ciphertext = ''
       for i in 0..@plaintext.length-1
-        @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256).to_s
+        @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256).chr
       end
     else # file
       @ciphertext = []
@@ -153,7 +153,7 @@ class Cipher
     if (@type === 'text')
       @plaintext = ''
       for i in 0..@ciphertext.length-1
-        @plaintext += (((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256).to_s
+        @plaintext += (((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256).chr
       end
     else # file
       @plaintext = []
