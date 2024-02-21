@@ -226,13 +226,48 @@ class Cipher
       # remove first two letters
       @plaintext = @plaintext[2, @plaintext.length]
     end
-
-    puts @ciphertext, "this is ciphertext"
   end
 
   def playfair_decrypt
     self.sanitize
     self.parse_keyword_playfair
+
+    # replace J with I (shouldn't be necessary, but just in case)
+    @ciphertext = @ciphertext.gsub('J', 'I')
+
+    # encrypt
+    @plaintext = ''
+
+    while @ciphertext.length > 0
+      # if odd length, add X
+      # if @plaintext.length == 1
+      #   @plaintext += 'X'
+      # end
+      # if same letter, insert X
+      # if @plaintext[0] == @plaintext[1]
+      #   @plaintext = @plaintext[0, 1] + 'X' + @plaintext[1, @plaintext.length]
+      # end
+      # first letter
+      idx1 = @matrix.find_index(@ciphertext[0])
+      # second letter
+      idx2 = @matrix.find_index(@ciphertext[1])
+
+      # same row
+      if idx1[0] == idx2[0]
+        @plaintext += @matrix[idx1[0], (idx1[1] - 1 + 5) % 5]
+        @plaintext += @matrix[idx2[0], (idx2[1] - 1 + 5) % 5]
+      # same column
+      elsif idx1[1] == idx2[1]
+        @plaintext += @matrix[(idx1[0] - 1 + 5) % 5, idx1[1]]
+        @plaintext += @matrix[(idx2[0] - 1 + 5) % 5, idx2[1]]
+      # different row and column
+      else
+        @plaintext += @matrix[idx1[0], idx2[1]]
+        @plaintext += @matrix[idx2[0], idx1[1]]
+      end
+      # remove first two letters
+      @ciphertext = @ciphertext[2, @ciphertext.length]
+    end
   end
 
   def affine_encrypt
