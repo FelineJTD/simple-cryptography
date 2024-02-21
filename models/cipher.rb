@@ -129,15 +129,15 @@ class Cipher
   end
 
   def extended_vigenere_encrypt
-    @ciphertext = ''
     if (@type === 'text')
+      @ciphertext = ''
       for i in 0..@plaintext.length-1
         @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256).to_s
       end
     else # file
-      for i in 0..10
-        puts @plaintext[i].ord
-        @ciphertext += (((@plaintext[i].ord) + (@key[i % @key.length].ord)) % 256).to_s
+      @ciphertext = []
+      for i in 0..@plaintext.length-1
+        @ciphertext.append((@plaintext[i.to_s].to_i + @key[i % @key.length].ord) % 256)
       end
     end
   end
