@@ -39,6 +39,34 @@ class Cipher
     puts @matrix_size, "this is matrix size"
   end
 
+  def parse_keyword_playfair
+    alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    # Sanitize j
+    @key = @key.gsub('J', '').upcase
+    # Extract unique letters
+    key_array = []
+    for i in 0..@key.length-1
+      if !key_array.include?(@key[i])
+        key_array.append(@key[i])
+      end
+    end
+    # Add all other alphabets
+    for i in 0..25
+      if !key_array.include?(alphabets[i])
+        key_array.append(alphabets[i])
+      end
+    end
+    # Parse as matrix
+    @matrix = []
+    for i in 0..4
+      temp = []
+      for j in 0..4
+        temp.append([key_array[i*5+j]])
+      end
+      @matrix.append(temp)
+    end
+  end
+
   def encrypt
     case @cipher
     when 'vigenere'
@@ -164,7 +192,8 @@ class Cipher
   end
 
   def playfair_encrypt
-
+    self.sanitize
+    self.parse_keyword_playfair
   end
 
   def playfair_decrypt
