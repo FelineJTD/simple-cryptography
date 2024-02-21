@@ -44,6 +44,9 @@ function callEncrypt(data) {
     method: 'POST',
     data: data,
     success: function(response) {
+      if (document.getElementById('download-link')) {
+        document.getElementById('download-link').remove();
+      }
       res = JSON.parse(response);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
@@ -60,10 +63,11 @@ function callEncrypt(data) {
         const a = document.createElement('a');
         a.href = url;
         a.download = `encrypted.${data.file_extension}`;
+        a.id = 'download-link';
         document.body.appendChild(a);
         a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // window.URL.revokeObjectURL(url);
+        // document.body.removeChild(a);
       }
     },
     error: function(error) {
@@ -116,6 +120,9 @@ function callDecrypt(data) {
     method: 'POST',
     data: data,
     success: function(response) {
+      if (document.getElementById('download-link')) {
+        document.getElementById('download-link').remove();
+      }
       res = JSON.parse(response);
       console.log(res);
       $('#response').val(res.result);
@@ -133,10 +140,11 @@ function callDecrypt(data) {
         const a = document.createElement('a');
         a.href = url;
         a.download = `decrypted.${data.file_extension}`;
+        a.id = 'download-link';
         document.body.appendChild(a);
         a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // window.URL.revokeObjectURL(url);
+        // document.body.removeChild(a);
       }
     },
     error: function(error) {
@@ -151,6 +159,25 @@ function convertToASCIIArray(content) {
     asciiArray.push(content.charCodeAt(i));
   }
   return asciiArray;
+}
+
+function download() {
+  if (document.getElementById('download-link')) {
+    document.getElementById('download-link').click();
+  } else {
+    console.log($('#response').val());
+    const blob = new Blob([$('#response').val()], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    if (document.getElementById('download-link')) {
+      document.getElementById('download-link').remove();
+    }
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `result.txt`;
+    a.id = 'download-link';
+    document.body.appendChild(a);
+    a.click();
+  }
 }
 
 // LISTENERS
