@@ -14,7 +14,7 @@ end
 
 post '/encrypt' do
   puts params
-  plaintext = Cipher.new(params[:type], params[:plaintext], params[:cipher], params[:key], '', params[:affine_key_a], params[:affine_key_b], params[:matrix_size], params[:matrix])
+  plaintext = Cipher.new(params[:type], params[:plaintext], params[:cipher], params[:key], '', params[:affine_key_a], params[:affine_key_b], params[:matrix_size], params[:matrix], params[:file_extension] || '')
   result = plaintext.encrypt
   { result: result }.to_json
 end

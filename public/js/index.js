@@ -15,17 +15,17 @@ function encrypt() {
 
   // read file
   if (type == 'file') {
+    const fileExtension = $('#input-file').val().split('.').pop();
     var file = document.getElementById('input-file').files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
       const byteArray = new Uint8Array(e.target.result);
-      callEncrypt({ type: type, plaintext: byteArray, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
+      callEncrypt({ type: type, file_extension: fileExtension, plaintext: byteArray, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
     };
-
     reader.readAsArrayBuffer(file);
   }
   else {
-    callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
+    callEncrypt({ type: type, file_extension: '', plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, matrix_size: matrix_size, matrix: matrix});
   }
 }
 
@@ -37,6 +37,20 @@ function callEncrypt(data) {
     success: function(response) {
       res = JSON.parse(response);
       $('#response').val(res.result);
+      $('#response-64').val(btoa(res.result));
+      if (data.type == 'file') {
+        // download file
+        const charResult = String.fromCharCode.apply(null, res.result);
+        const blob = new Blob([charResult], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `encrypted.${data.file_extension}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
     },
     error: function(error) {
       console.error(error);

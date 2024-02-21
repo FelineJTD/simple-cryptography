@@ -10,9 +10,9 @@
 # h) Bonus: Enigma Machine (26 huruf alfabet)
 
 class Cipher
-  attr_accessor :type, :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b, :matrix_size, :matrix
+  attr_accessor :type, :plaintext, :cipher, :key, :ciphertext, :key_a, :key_b, :matrix_size, :matrix, :file_extension
 
-  def initialize(type, plaintext, cipher, key, ciphertext, key_a, key_b, matrix_size, matrix)
+  def initialize(type, plaintext, cipher, key, ciphertext, key_a, key_b, matrix_size, matrix, file_extension)
     @type = type
     @plaintext = plaintext
     @cipher = cipher
@@ -22,6 +22,7 @@ class Cipher
     @key_b = key_b.to_i
     @matrix_size = matrix_size
     @matrix = matrix
+    @file_extension = file_extension
   end
 
   def sanitize
