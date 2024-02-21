@@ -10,6 +10,8 @@ function encrypt() {
   key = $('#input-key').val();
   affine_key_a = $('#input_key_a').val();
   affine_key_b = $('#input_key_b').val();
+  hill_m_length = $('#input-matrix-size').val();
+  hill_m_key = $('#input-matrix-key').val();
 
   // read file
   if (type == 'file') {
@@ -17,12 +19,12 @@ function encrypt() {
     var reader = new FileReader();
     reader.onload = function(e) {
       plaintext = e.target.result;
-      callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
+      callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, hill_m_length: hill_m_length, hill_m_key: hill_m_key});
     }
     reader.readAsText(file);
   }
   else {
-    callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
+    callEncrypt({ type: type, plaintext: plaintext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, hill_m_length: hill_m_length, hill_m_key: hill_m_key});
   }
 }
 
@@ -52,18 +54,20 @@ function decrypt() {
   key = $('#input-key').val();
   affine_key_a = $('#input_key_a').val();
   affine_key_b = $('#input_key_b').val();
+  hill_m_length = $('#input-matrix-size').val();
+  hill_m_key = $('#input-matrix-key').val();
 
   if (type == 'file') {
     var file = document.getElementById('input-file').files[0];
     var reader = new FileReader();
     reader.onload = function(e) {
       ciphertext = e.target.result;
-      callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
+      callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, hill_m_length: hill_m_length, hill_m_key: hill_m_key});
     }
     reader.readAsText(file);
   }
   else {
-    callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b});
+    callDecrypt({ type: type, ciphertext: ciphertext, cipher: cipher, key: key, affine_key_a: affine_key_a, affine_key_b: affine_key_b, hill_m_length: hill_m_length, hill_m_key: hill_m_key});
   }
 }
 
