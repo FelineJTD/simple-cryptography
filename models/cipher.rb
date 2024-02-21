@@ -190,27 +190,45 @@ class Cipher
     self.sanitize
     self.parse_keyword_playfair
 
-    modified_plaintext = ''
-    # insert X between double letters
-    for i in 0..@plaintext.length-1
-      modified_plaintext += @plaintext[i]
-      if i < @plaintext.length - 1 && @plaintext[i] == @plaintext[i + 1]
-        modified_plaintext += 'X'
-      end
-    end
-
-    # add padding if odd length
-    if modified_plaintext.length % 2 != 0
-      modified_plaintext += 'X'
-    end
-
     # replace J with I
-    modified_plaintext = modified_plaintext.gsub('J', 'I')
+    @plaintext = @plaintext.gsub('J', 'I')
 
     # encrypt
     @ciphertext = ''
 
-    @ciphertext
+    i = 0
+    while @plaintext.length > 0
+      # if odd length, add X
+      if @plaintext.length == 1
+        @plaintext += 'X'
+      end
+      # if same letter, insert X
+      if @plaintext[0] == @plaintext[1]
+        @plaintext = @plaintext[0, 1] + 'X' + @plaintext[1, @plaintext.length]
+      end
+      # first letter
+      idx1 = @matrix.find_index(@plaintext[i])
+      # second letter
+      idx2 = @matrix.find_index(@plaintext[i + 1])
+
+      # same row
+      if idx1[0] == idx2[0]
+        @ciphertext += @matrix[idx1[0], (idx1[1] + 1) % 5]
+        @ciphertext += @matrix[idx2[0], (idx2[1] + 1) % 5]
+      # same column
+      elsif idx1[1] == idx2[1]
+        @ciphertext += @matrix[(idx1[0] + 1) % 5, idx1[1]]
+        @ciphertext += @matrix[(idx2[0] + 1) % 5, idx2[1]]
+      # different row and column
+      else
+        @ciphertext += @matrix[idx1[0], idx2[1]]
+        @ciphertext += @matrix[idx2[0], idx1[1]]
+      end
+      # remove first two letters
+      @plaintext = @plaintext[2, @plaintext.length]
+    end
+
+    puts @ciphertext, "this is ciphertext"
   end
 
   def playfair_decrypt
