@@ -10,8 +10,8 @@ function encrypt() {
   key = $('#input-key').val();
   affine_key_a = $('#input_key_a').val();
   affine_key_b = $('#input_key_b').val();
-  matrix_size = $('#input-matrix-size').val();
-  matrix = $('#input-matrix-key').val();
+  matrix_size = $('#matrix_size').val();
+  matrix = $('#matrix').val();
 
   // read file
   if (type == 'file') {
@@ -54,8 +54,8 @@ function decrypt() {
   key = $('#input-key').val();
   affine_key_a = $('#input_key_a').val();
   affine_key_b = $('#input_key_b').val();
-  matrix_size = $('#input-matrix-size').val();
-  matrix = $('#input-matrix-key').val();
+  matrix_size = $('#matrix_size').val();
+  matrix = $('#matrix').val();
 
   if (type == 'file') {
     var file = document.getElementById('input-file').files[0];

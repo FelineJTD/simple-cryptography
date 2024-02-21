@@ -30,6 +30,12 @@ class Cipher
     @plaintext = @plaintext.gsub(/[^a-zA-Z]/, '').upcase
     @key = @key.gsub(/[^a-zA-Z]/, '').upcase
     @ciphertext = @ciphertext.gsub(/[^a-zA-Z]/, '').upcase
+
+    if @matrix != ''
+      @matrix = @matrix.split(/[,\s]+/).map(&:to_i)
+    end
+    puts @matrix, "this is matrix"
+    puts @matrix_size, "this is matrix size"
   end
 
   def encrypt
