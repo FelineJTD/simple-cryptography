@@ -332,8 +332,19 @@ class Cipher
       end
     end
 
-    puts @plaintext
+    substrings = @plaintext.scan(/.{1,#{@matrix_size}}/)
 
+    for substring_idx in 0..substrings.length-1 # this loops for every substring
+      for row_idx in 0..@matrix_size-1 # this loops for the encryption matrix row
+        temp_ord_value = 0
+        for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
+          selected_substring = substrings[substring_idx]
+          temp_ord_value += @matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
+          print "row_idx: ", row_idx, " col_idx: ", col_idx, " selected_substring: ", selected_substring, " selected_substring[col_idx]: ", selected_substring[col_idx], " ", (selected_substring[col_idx]).ord - 65, " ", @matrix[@matrix_size * row_idx + col_idx], " ", temp_ord_value, "\n"
+        end
+        @ciphertext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).chr
+      end
+    end
   end
 
   def hill_decrypt
