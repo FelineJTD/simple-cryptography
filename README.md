@@ -1,30 +1,43 @@
-Agak gila tiba-tiba pake Ruby but lesgooooo
 
-# garis besar
-ini pake Sinatra instead of Ruby on Rails, katanya sih lebih gampang dipelajarin soalnya buat app kecil. install ruby, install sinatra, terus run. kalo ga bisa, chatgpt :D
+# Simple Cryptography Web App with Ruby
 
-# setup:
-1. install ruby https://gorails.com/setup/ubuntu/22.04
-2. install sinatra
-3. run `rerun ruby app.rb`
+Aplikasi ini adalah web app sederhana yang dibangun menggunakan Ruby yang mampu mengenkripsi dan mendekripsi teks ataupun file menggunakan metode-metode berikut ini:
+1. Standard Vigenere Cipher (26 huruf alphabet)
+2. Auto-Key Vigenere Cipher (26 huruf alphabet)
+3. Extended Vigenere Cipher (256 karakter ASCII)
+4. Playfair Cipher (26 huruf alphabet)
+5. Affine Cipher (26 huruf alphabet)
+6. Hill Cipher (26 huruf alphabet)
+7. Super encryption: Extended Vigenere Cipher dan Cipher Transposisi
+## Cara Menjalankan Program
 
-# note to self
-- Gemfile is like package.json di react, isinya dependencies.
-`bundle add [gemname]` buat nambahin gem
+Lakukan clone repository ke device lokal
 
-- APPARENTLY HRS <button type="button"></button> BARU JALAN LIKE WTF IT NEEDS TO SPECIFY THE TYPE IS BUTTON???!!
+```bash
+  git clone https://github.com/FelineJTD/simple-cryptography
+```
 
-# how to do fe-be
-- from the FE, call a function using js (public/js/whatever file you create for the function)
-- then the js will do GET/POST to an API in app.rb
-- the API will call a method from a model (models/whatever file you create for the method), don't forget to import this first di paling atas file app.rb
-- the method will do the logic, and return the result to the API
-- the API will return the result to the js
-- the js can inject the response to the FE
+Masuk ke dalam directory project
 
-chatgpt gives me the way with ajax and jquery, so I'm going with it.
+```bash
+  cd simple-cryptography
+```
 
-## to debug
-- use the console (console.log) to debug js (THIS PRINTS TO THE BROWSER CONSOLE)
-- see the Network tab to look at specific errors when fetch fails (IN THE BROWSER)
-- use puts in ruby (THIS PRINTS TO THE TERMINAL)
+Lakukan instalasi bundle yang diperlukan untuk project ini. Pastikan Ruby dan Sinatra telah terinstalasi terlebih dahulu.
+
+```bash
+  bundle install
+```
+
+Jalankan server menggunakan perintah berikut. Pastikan port 4567 terbuka untuk diakses aplikasi
+
+```bash
+  ruby app.rb
+```
+
+
+## Authors
+
+- Gede Prasidha Bhawarnawa - IF - 13520004
+- Felicia Sutandijo - IF - 13520050
+
