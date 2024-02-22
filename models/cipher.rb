@@ -356,42 +356,71 @@ class Cipher
       end
     end
 
-  inverse_matrix = Matrix.[](*@matrix.each_slice(@matrix_size).to_a).inverse
+    inverse_matrix = Matrix.[](*@matrix.each_slice(@matrix_size).to_a).inverse
 
-  # Convert inverse_matrix back to 1D array
-  inverse_matrix = inverse_matrix.to_a.flatten
+    # Convert inverse_matrix back to 1D array
+    inverse_matrix = inverse_matrix.to_a.flatten
 
-  puts inverse_matrix.class, "this is inverse matrix type"
+    puts inverse_matrix.class, "this is inverse matrix type"
 
-  substrings = @ciphertext.scan(/.{1,#{@matrix_size}}/)
+    substrings = @ciphertext.scan(/.{1,#{@matrix_size}}/)
 
-  for substring_idx in 0..substrings.length-1 # this loops for every substring
-    for row_idx in 0..@matrix_size-1 # this loops for the encryption matrix row
-      temp_ord_value = 0
-      for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
-        selected_substring = substrings[substring_idx]
-        temp_ord_value += inverse_matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
-        print "row: ", row_idx, " col: ", col_idx, " temp_ord_value mod 26: ", temp_ord_value % 26, " type of temp_ord_value mod 26: ", (temp_ord_value % 26).class, "\n"
+    for substring_idx in 0..substrings.length-1 # this loops for every substring
+      for row_idx in 0..@matrix_size-1 # this loops for the encryption matrix row
+        temp_ord_value = 0
+        for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
+          selected_substring = substrings[substring_idx]
+          temp_ord_value += inverse_matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
+          print "row: ", row_idx, " col: ", col_idx, " temp_ord_value mod 26: ", temp_ord_value % 26, " type of temp_ord_value mod 26: ", (temp_ord_value % 26).class, "\n"
+        end
+        @plaintext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).to_i.chr
       end
-      @plaintext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).to_i.chr
     end
-  end
 
   end
 
   def super_encrypt
-    # @GEDE TODO
+    self.sanitize
+
+    # Perform transposition cipher first, then extended vigenere
+    # By default, the size of the column is 4
+    column_size = 4
+    if @plaintext.length % column_size != 0
+      for i in 0..(column_size - @plaintext.length % column_size) - 1
+        @plaintext += 'X'
+      end
+    end
+
+    substrings = @plaintext.scan(/.{1,#{column_size}}/)
+
+    temptext = ''
+
+    for row in 0..column_size-1
+      for col in 0..substrings.length-1
+        temptext += substrings[col][row]
+      end
+    end
+
+    # Then, perform extended vigenere
+    @ciphertext = []
+    for i in 0..temptext.length-1
+      @ciphertext.append(((temptext[i].ord) + (@key[i % @key.length].ord)) % 256)
+    end
+
   end
 
   def super_decrypt
-    # @GEDE TODO
-  end
+    # Reverse the extended vigenere first, then reverse the transposition cipher
+    temptext = []
+    for i in 0..@ciphertext.length-1
+      temptext.append(((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256)
+    end
 
-  def enigma_encrypt
-    # @GEDE TODO
-  end
+    temptext = temptext.pack('c*')
+    puts temptext, "this is temptext"
 
-  def enigma_decrypt
-    # @GEDE TODO
+    # By default, the size of the column is 4
+    column_size = 4
+
   end
 end
