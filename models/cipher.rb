@@ -376,7 +376,11 @@ class Cipher
     # if file
     if @type === 'file'
       num_of_padding = (column_size - @plaintext.length % column_size)
-      substrings = Matrix.build(column_size) { |row, col| @plaintext[(row * column_size + col).to_s].to_i }
+      substrings = Matrix.build(row_size+1, column_size) { |row, col| @plaintext[(row * column_size + col).to_s].to_i }
+      for i in num_of_padding - 1..0
+        substrings[row_size - 1, column_size - i] = 88
+      end
+      print substrings
       temptext = {}
     else
       if @plaintext.length % column_size != 0
@@ -391,7 +395,7 @@ class Cipher
     for row in 0..column_size-1
       for col in 0..row_size-1
         if @type === 'file'
-          temptext[(row * column_size + col).to_s] = substrings[row, col].to_s
+          temptext[(row * (column_size - 1) + col).to_s] = substrings[row, col].to_s
         else
           temptext += substrings[col][row]
         end
@@ -399,14 +403,9 @@ class Cipher
     end
 
     @plaintext = temptext
+    puts @plaintext
+    # extended vigenere
     self.extended_vigenere_encrypt
-
-    # Then, perform extended vigenere
-    # @ciphertext = []
-    # for i in 0..temptext.length-1
-    #   @ciphertext.append(((temptext[i].ord) + (@key[i % @key.length].ord)) % 256)
-    # end
-
   end
 
   def super_decrypt
