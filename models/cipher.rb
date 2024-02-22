@@ -380,11 +380,10 @@ class Cipher
   end
 
   def super_encrypt
-    self.sanitize
-
     # Perform transposition cipher first, then extended vigenere
     # By default, the size of the column is 4
     column_size = 4
+    # add padding
     if @plaintext.length % column_size != 0
       for i in 0..(column_size - @plaintext.length % column_size) - 1
         @plaintext += 'X'
@@ -401,26 +400,37 @@ class Cipher
       end
     end
 
+    @plaintext = temptext
+    self.extended_vigenere_encrypt
+
     # Then, perform extended vigenere
-    @ciphertext = []
-    for i in 0..temptext.length-1
-      @ciphertext.append(((temptext[i].ord) + (@key[i % @key.length].ord)) % 256)
-    end
+    # @ciphertext = []
+    # for i in 0..temptext.length-1
+    #   @ciphertext.append(((temptext[i].ord) + (@key[i % @key.length].ord)) % 256)
+    # end
 
   end
 
   def super_decrypt
     # Reverse the extended vigenere first, then reverse the transposition cipher
+    self.extended_vigenere_decrypt
+
+    @ciphertext = @plaintext
+
+    row_size = 4
+    column_size = (@ciphertext.length / row_size)
+
+    substrings = Matrix.build(row_size) { |row, col| @ciphertext[row * column_size + col] }
+
     temptext = []
-    for i in 0..@ciphertext.length-1
-      temptext.append(((@ciphertext[i].ord) - (@key[i % @key.length].ord) + 256) % 256)
+
+    for col in 0..column_size-1
+      for row in 0..row_size-1
+        temptext.append(substrings[row, col])
+      end
     end
 
-    temptext = temptext.pack('c*')
-    puts temptext, "this is temptext"
-
-    # By default, the size of the column is 4
-    column_size = 4
+    @plaintext = temptext
 
   end
 end
