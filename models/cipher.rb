@@ -37,8 +37,6 @@ class Cipher
     if @matrix != ''
       @matrix = @matrix.split(/[,\s]+/).map(&:to_i)
     end
-    puts @matrix, "this is matrix"
-    puts @matrix_size, "this is matrix size"
   end
 
   def parse_keyword_playfair
@@ -274,9 +272,6 @@ class Cipher
   def affine_encrypt
     self.sanitize
 
-    puts @key_a, " this is key a"
-    puts @key_b, " this is key b"
-
     if @key_a == '' || @key_b == ''
       @ciphertext = 'Invalid key'
       return
@@ -295,9 +290,6 @@ class Cipher
       @plaintext = 'Invalid key'
       return
     end
-
-    puts @key_a, " this is key a"
-    puts @key_b, " this is key b"
 
     coef = 1
     for i in 1..25
@@ -361,8 +353,6 @@ class Cipher
     # Convert inverse_matrix back to 1D array
     inverse_matrix = inverse_matrix.to_a.flatten
 
-    puts inverse_matrix.class, "this is inverse matrix type"
-
     substrings = @ciphertext.scan(/.{1,#{@matrix_size}}/)
 
     for substring_idx in 0..substrings.length-1 # this loops for every substring
@@ -371,32 +361,40 @@ class Cipher
         for col_idx in 0..@matrix_size-1 # this loops for the encryption matrix column
           selected_substring = substrings[substring_idx]
           temp_ord_value += inverse_matrix[@matrix_size * row_idx + col_idx] * ((selected_substring[col_idx]).ord - 65)
-          print "row: ", row_idx, " col: ", col_idx, " temp_ord_value mod 26: ", temp_ord_value % 26, " type of temp_ord_value mod 26: ", (temp_ord_value % 26).class, "\n"
         end
         @plaintext[@matrix_size * substring_idx + row_idx] = (temp_ord_value % 26 + 65).to_i.chr
       end
     end
-
   end
 
   def super_encrypt
     # Perform transposition cipher first, then extended vigenere
     # By default, the size of the column is 4
     column_size = 4
+    row_size = (@plaintext.length / column_size)
     # add padding
-    if @plaintext.length % column_size != 0
-      for i in 0..(column_size - @plaintext.length % column_size) - 1
-        @plaintext += 'X'
+    # if file
+    if @type === 'file'
+      num_of_padding = (column_size - @plaintext.length % column_size)
+      substrings = Matrix.build(column_size) { |row, col| @plaintext[(row * column_size + col).to_s].to_i }
+      temptext = {}
+    else
+      if @plaintext.length % column_size != 0
+        for i in 0..(column_size - @plaintext.length % column_size) - 1
+          @plaintext += 'X'
+        end
       end
+      substrings = @plaintext.scan(/.{1,#{column_size}}/)
+      temptext = ''
     end
 
-    substrings = @plaintext.scan(/.{1,#{column_size}}/)
-
-    temptext = ''
-
     for row in 0..column_size-1
-      for col in 0..substrings.length-1
-        temptext += substrings[col][row]
+      for col in 0..row_size-1
+        if @type === 'file'
+          temptext[(row * column_size + col).to_s] = substrings[row, col].to_s
+        else
+          temptext += substrings[col][row]
+        end
       end
     end
 
