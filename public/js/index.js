@@ -14,7 +14,7 @@ function encrypt() {
   matrix = $('#matrix').val();
 
   // read file
-  if (type == 'file' && cipher == 'extended') {
+  if (type == 'file' && (cipher == 'extended' || cipher == 'super')) {
     const fileExtension = $('#input-file').val().split('.').pop();
     var file = document.getElementById('input-file').files[0];
     var reader = new FileReader();
@@ -50,10 +50,10 @@ function callEncrypt(data) {
       res = JSON.parse(response);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
-      if (data.type == 'file' || data.cipher == 'extended') {
+      if (data.type == 'file' || data.cipher == 'extended' || data.cipher == 'super') {
         // download file
         var blob;
-        if (data.cipher == 'extended') {
+        if (data.cipher == 'extended' || data.cipher == 'super') {
           const reconstructed = new Uint8Array(res.result);
           // try to display in #response
           const str = String.fromCharCode.apply(null, reconstructed);
@@ -92,7 +92,7 @@ function decrypt() {
   matrix = $('#matrix').val();
 
   // read file
-  if (type === 'file' && cipher === 'extended') {
+  if (type === 'file' && (cipher === 'extended' || cipher === 'super')) {
     const fileExtension = $('#input-file').val().split('.').pop();
     var file = document.getElementById('input-file').files[0];
     var reader = new FileReader();
@@ -128,10 +128,10 @@ function callDecrypt(data) {
       console.log(res);
       $('#response').val(res.result);
       $('#response-64').val(btoa(res.result));
-      if (data.type == 'file' || data.cipher == 'extended') {
+      if (data.type == 'file' || data.cipher == 'extended' || data.cipher == 'super') {
         // download file
         var blob;
-        if (data.cipher == 'extended') {
+        if (data.cipher == 'extended' || data.cipher == 'super') {
           const reconstructed = new Uint8Array(res.result);
           // try to display in #response
           const str = String.fromCharCode.apply(null, reconstructed);
